@@ -1,5 +1,5 @@
 {
-  "name": "IntelliJ Spring Boot Java App Test",
+  "name": "VIATAB Java Dev Environment",
   "build": {
     "dockerfile": "../Dockerfile",
     "context": "..",
