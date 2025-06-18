@@ -36,3 +36,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/backend_viatab:${{ github.sha }}
+	    ${{ secrets.DOCKERHUB_USERNAME }}/backend_viatab:latest

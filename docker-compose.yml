@@ -18,6 +18,6 @@ services:
       - "8080:8080"
 
   db:
-    image: yourdockerhubuser/viatab_db:latest
+    image: dogmeat2000/database_viatab:latest
     ports:
       - "5432:5432"
