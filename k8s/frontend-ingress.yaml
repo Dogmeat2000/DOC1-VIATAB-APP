@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: viatab-ingress
+  namespace: viatab
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: viatab.local
+      http:
+        paths:
+          # Route all /api requests to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: viatab-backend
+                port:
+                  number: 8080
+          # Everything else to frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: viatab-frontend
+                port:
+                  number: 80

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: database
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/doc1-viatab-app-default: "true"
+        io.kompose.service: database
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: viatab
+            - name: POSTGRES_PASSWORD
+              value: admin
+            - name: POSTGRES_USER
+              value: admin
+          image: dogmeat2000/database_viatab:latest
+          name: viatab-db
+          ports:
+            - containerPort: 5432
+              hostPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: database-claim0
+              readOnly: true
+            - mountPath: /var/lib/postgresql/data
+              name: pgdata
+      restartPolicy: Always
+      volumes:
+        - name: database-claim0
+          persistentVolumeClaim:
+            claimName: database-claim0
+            readOnly: true
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata

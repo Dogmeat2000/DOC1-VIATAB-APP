@@ -5,12 +5,12 @@ metadata:
     kompose.cmd: kompose --file ../docker-compose.yml convert
     kompose.version: 1.32.0 (765fde254)
   labels:
-    io.kompose.service: backend
-  name: backend
+    io.kompose.service: database
+  name: database
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 8080
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
   selector:
-    io.kompose.service: backend
+    io.kompose.service: database

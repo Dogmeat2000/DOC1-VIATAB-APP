@@ -1,27 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: viatab-backend
-  namespace: viatab
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: backend
+  name: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: viatab-backend
+      io.kompose.service: backend
   template:
     metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert
+        kompose.version: 1.32.0 (765fde254)
       labels:
-        app: viatab-backend
+        io.kompose.network/doc1-viatab-app-default: "true"
+        io.kompose.service: backend
     spec:
       containers:
-        - name: backend
-          image: dogmeat2000/backend_viatab:latest
-          env:
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://viatab-db:5432/viatab"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "admin"
+        - env:
             - name: SPRING_DATASOURCE_PASSWORD
-              value: "admin"
+              value: admin
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://database:5432/viatab
+            - name: SPRING_DATASOURCE_USERNAME
+              value: admin
+          image: dogmeat2000/backend_viatab:latest
+          name: viatab-backend
           ports:
             - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+      restartPolicy: Always
