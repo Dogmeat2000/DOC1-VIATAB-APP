@@ -1,5 +1,5 @@
 {
-  "name": "React + TypeScript Dev Environment",
+  "name": "VIATAB TypeScript + React Dev Environment",
   "build": {
     "dockerfile": "../Dockerfile",
     "context": ".."
@@ -12,8 +12,7 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-vscode.vscode-typescript-next",
-        "bradlc.vscode-tailwindcss"
+        "ms-vscode.vscode-typescript-next"
       ]
     }
   },
