@@ -6,7 +6,7 @@
   },
   "workspaceFolder": "/workspace",
   "forwardPorts": [5173],
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "npm install -g typescript vite",
   "customizations": {
     "vscode": {
       "extensions": [
