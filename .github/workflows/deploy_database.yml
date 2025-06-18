@@ -1,4 +1,4 @@
-name: CI/CD Build & Deploy Frontend
+name: CI/CD Build & Deploy Database
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push-frontend:
+  build-and-push-database:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -28,11 +28,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and Push Frontend
+      - name: Build and Push Database
         uses: docker/build-push-action@v5
         with:
-          context: typescript/frontend_viatab
-          file: typescript/frontend_viatab/Dockerfile
+          context: database
+          file: database/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/frontend_viatab:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/database_viatab:${{ github.sha }}
