@@ -1,7 +1,3 @@
-CREATE DATABASE viatab;
-
-\c viatab;
-
 CREATE TABLE department (
     id   SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE
