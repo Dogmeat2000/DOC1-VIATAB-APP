@@ -12,5 +12,5 @@ CREATE TABLE story (
 
 -- Seed departments
 INSERT INTO department (name) VALUES
-  ('Engineering'), ('Humanities'), ('Business')
+  ('Engineering'), ('Health'), ('Business')
 ON CONFLICT DO NOTHING;
