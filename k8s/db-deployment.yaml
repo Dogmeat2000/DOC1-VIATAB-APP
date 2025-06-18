@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: viatab-db
+  namespace: viatab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: viatab-db
+  template:
+    metadata:
+      labels:
+        app: viatab-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: "viatab"
+            - name: POSTGRES_USER
+              value: "admin"
+            - name: POSTGRES_PASSWORD
+              value: "admin"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: db-storage
+              mountPath: /var/lib/postgresql/data
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
+        - name: init-sql
+          configMap:
+            name: db-init-sql
+            items:
+              - key: viatabloid.sql
+                path: viatabloid.sql

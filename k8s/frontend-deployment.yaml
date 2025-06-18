@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: viatab-frontend
+  namespace: viatab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: viatab-frontend
+  template:
+    metadata:
+      labels:
+        app: viatab-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: dogmeat2000/frontend_viatab:latest
+          env:
+            - name: VITE_API_BASE_URL
+              value: "http://viatab-backend:8080"
+          ports:
+            - containerPort: 80
