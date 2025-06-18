@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Routes, NavLink } from 'react-router-dom';
 import Department from './components/Department';
 
