@@ -1,30 +1,46 @@
 import { useEffect, useState } from 'react';
 import StoryForm from './StoryForm';
 import StoryItem from './StoryItem';
-import type { Story } from './types';
+import type { Department, Story } from '../api';
+import { getDepts, getStories, deleteStory } from '../api';
 
 export default function Department({ name }: { name: string }) {
+  const [deptId, setDeptId] = useState<number | null>(null);
   const [stories, setStories] = useState<Story[]>([]);
 
+  // Load department ID
   useEffect(() => {
-    fetch(`http://localhost:8080/api/stories?department=${name}`)
-      .then((res) => res.json())
-      .then(setStories)
+    getDepts()
+      .then((depts) => {
+        const dept = depts.find((d) => d.name === name);
+        if (dept) setDeptId(dept.id);
+      })
       .catch(console.error);
   }, [name]);
+
+  // Load stories when deptId is known
+  useEffect(() => {
+    if (deptId !== null) {
+      getStories(deptId)
+        .then(setStories)
+        .catch(console.error);
+    }
+  }, [deptId]);
 
   function handleAddStory(newStory: Story) {
     setStories((prev) => [...prev, newStory]);
   }
 
   function handleDeleteStory(id: number) {
-    setStories((prev) => prev.filter((s) => s.id !== id));
+    deleteStory(id).then(() => {
+      setStories((prev) => prev.filter((s) => s.id !== id));
+    }).catch(console.error);
   }
 
   return (
     <div>
       <h2>{name} Department</h2>
-      <StoryForm department={name} onAdd={handleAddStory} />
+      {deptId !== null && <StoryForm deptId={deptId} onAdd={handleAddStory} />}
       <ul className="story-list">
         {stories.map((story) => (
           <li key={story.id} className="story-item">
