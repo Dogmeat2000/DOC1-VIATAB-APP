@@ -9,6 +9,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: viatab
     volumes:
+      - ./database/viatabloid.sql:/docker-entrypoint-initdb.d/viatabloid.sql:ro
       - pgdata:/var/lib/postgresql/data
 
   backend:
