@@ -1,23 +1,39 @@
 version: "3.8"
 
 services:
-  frontend:
-    image: yourdockerhubuser/frontend_viatab:latest
-    ports:
-      - "80:80"
-
-  backend:
-    image: yourdockerhubuser/backend_viatab:latest
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/viatab
-      - SPRING_DATASOURCE_USERNAME=admin
-      - SPRING_DATASOURCE_PASSWORD=admin
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
-
-  db:
+  database:
     image: dogmeat2000/database_viatab:latest
+    container_name: viatab_db
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: viatab
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    image: dogmeat2000/backend_viatab:latest
+    container_name: viatab_backend
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/viatab
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+
+  frontend:
+    image: dogmeat2000/frontend_viatab:latest
+    container_name: viatab_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8080
+
+volumes:
+  pgdata:
