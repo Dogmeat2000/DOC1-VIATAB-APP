@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
-import type { Story } from './types';
+import { useState } from 'react';
+import type { Story } from '../api';
+import { addStory } from '../api';
 
 interface StoryFormProps {
-  department: string;
+  deptId: number;
   onAdd: (s: Story) => void;
 }
 
-export default function StoryForm({ department, onAdd }: StoryFormProps) {
+export default function StoryForm({ deptId, onAdd }: StoryFormProps) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    fetch(`http://localhost:8080/api/stories`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, content, department }),
-    })
-      .then((res) => res.json() as Promise<Story>)
-      .then(onAdd)
-      .then(() => {
-        setTitle('');
-        setContent('');
-      })
-      .catch(console.error);
+    try {
+      const newStory = await addStory(deptId, { title, content });
+      onAdd(newStory);
+      setTitle('');
+      setContent('');
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

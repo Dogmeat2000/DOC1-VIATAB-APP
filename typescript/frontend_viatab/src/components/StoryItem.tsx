@@ -1,4 +1,4 @@
-import type { Story } from './types';
+import type { Story } from '../api';
 
 interface StoryItemProps {
   story: Story;
@@ -7,9 +7,7 @@ interface StoryItemProps {
 
 export default function StoryItem({ story, onDelete }: StoryItemProps) {
   function handleDelete() {
-    fetch(`http://localhost:8080/api/stories/${story.id}`, { method: 'DELETE' })
-      .then(() => onDelete(story.id))
-      .catch(console.error);
+    onDelete(story.id);
   }
 
   return (
