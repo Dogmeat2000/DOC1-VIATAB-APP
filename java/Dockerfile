@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Maven globally (Spring Boot often uses Maven for dependency management)
-RUN curl -fsSL https://downloads.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz -o /tmp/maven.tar.gz \
+RUN curl -fsSL https://downloads.apache.org/maven/maven-3/3.9.10/binaries/apache-maven-3.9.10-bin.tar.gz -o /tmp/maven.tar.gz \
     && tar -xzf /tmp/maven.tar.gz -C /opt \
-    && ln -s /opt/apache-maven-3.9.6 /opt/maven \
+    && ln -s /opt/apache-maven-3.9.10 /opt/maven \
     && rm /tmp/maven.tar.gz
 
 # Set Maven environment variables
