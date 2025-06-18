@@ -1,4 +1,4 @@
-const BASE = 'http://localhost:8080/api';
+const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8080/api';
 
 export interface Department { id: number; name: string; }
 export interface Story { id: number; title: string; content: string; department: Department; }
