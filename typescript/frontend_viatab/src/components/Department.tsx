@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import StoryForm from './StoryForm';
 import StoryItem from './StoryItem';
 import type { Story } from './types';
