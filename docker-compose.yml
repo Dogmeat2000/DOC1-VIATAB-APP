@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   database:
     image: dogmeat2000/database_viatab:latest
