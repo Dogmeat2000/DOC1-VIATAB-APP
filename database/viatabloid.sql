@@ -1,6 +1,6 @@
-CREATE DATABASE viatabloid;
+CREATE DATABASE viatab;
 
-\c viatabloid;
+\c viatab;
 
 CREATE TABLE department (
     id   SERIAL PRIMARY KEY,
@@ -17,3 +17,4 @@ CREATE TABLE story (
 -- Seed departments
 INSERT INTO department (name) VALUES
   ('Engineering'), ('Humanities'), ('Business');
+ON CONFLICT DO NOTHING;
